@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: root-pod
+spec:
+  containers:
+    - name: root-container
+      image: ubuntu@sha256:3f0fd8560d144762a3b5a670e70bde00714347386eb7213eb651edc41aa6f241
+      command:
+        - sh
+        - -c
+        - |
+          apt update && \
+          DEBIAN_FRONTEND=noninteractive apt install -y iptables libcap2-bin iproute2 && \
+          sleep 3600
+      securityContext:
+        runAsUser: 0
+        allowPrivilegeEscalation: false
+  restartPolicy: Always
+
